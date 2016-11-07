@@ -1,2 +1,4 @@
 test.dat
-
+.env
+.docker_build/
+vendor/*/

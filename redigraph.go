@@ -34,15 +34,10 @@ func (self *RedisDirectedGraph) RemoveEdge(from string, to string) {
 	}
 }
 
-func (self *RedisDirectedGraph) Connect(url string, password string, db int64) {
-	self.client = redis.NewClient(&redis.Options{
-		Addr:     url,
-		Password: password, // no password set
-		DB:       db,  // use default DB
-	})
+func (self *RedisDirectedGraph) Connect(url string) (err error) {
+	self.client = redis.NewClient(&redis.Options{Addr: url})
 
-	_, err := self.client.Ping().Result()
-	if err != nil {
-		panic(err)
-	}
+	// get caller check for error
+	_, err = self.client.Ping().Result()
+	return err
 }
