@@ -1,7 +1,7 @@
 package matcher
 
 import (
-    redis "gopkg.in/redis.v3"
+	redis "gopkg.in/redis.v3"
 )
 
 type RedisDirectedGraph struct {
@@ -34,8 +34,12 @@ func (self *RedisDirectedGraph) RemoveEdge(from string, to string) {
 	}
 }
 
-func (self *RedisDirectedGraph) Connect(url string) (err error) {
-	self.client = redis.NewClient(&redis.Options{Addr: url})
+func (self *RedisDirectedGraph) Connect(url string, password string) (err error) {
+	self.client = redis.NewClient(&redis.Options{
+		Addr:     url,
+		Password: password,
+		DB:       0,
+	})
 
 	// get caller check for error
 	_, err = self.client.Ping().Result()
