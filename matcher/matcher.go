@@ -12,7 +12,7 @@ func NewMatcher(graph DirectedGraph) *Matcher {
     return matcher
 }
 
-func (self *Matcher) FindLoop(have string, want string, maxDepth int) (bool, []string) {
+func (self *Matcher) FindCycleThrough(source string, through string, maxDepth int) (bool, []string) {
     // create new search structure
 	search := &SearchInfo{
 		curDepth: 0,
@@ -20,6 +20,6 @@ func (self *Matcher) FindLoop(have string, want string, maxDepth int) (bool, []s
 		path: new(Stack),
 		visited: make(map[string]bool),
 	}
-	// traverse my want in order to find myself
-	return dfs_path(self.graph, want, have, search), search.path.List()
+	// traverse through in order to find source
+	return dfs_path(self.graph, through, source, search), search.path.List()
 }

@@ -7,7 +7,7 @@ import (
 type DirectedGraph interface {
 	AddEdge(from string, to string)
 	RemoveEdge(from string, to string)
-	GetConnected(from string) []string
+	AdjacentEdges(from string) []string
 }
 
 type SearchInfo struct {
@@ -29,7 +29,7 @@ func dfs_path(graph DirectedGraph, source string, dest string, search *SearchInf
 		search.visited[source] = true
 	}
 	// get edges
-	links := graph.GetConnected(source)
+	links := graph.AdjacentEdges(source)
 	log.Println("Traversing ", source, " : ", links, " Path: ", search.path.List())
 	// traverse edges
 	for _, node := range links {
